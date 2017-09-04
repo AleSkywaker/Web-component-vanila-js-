@@ -1,0 +1,32 @@
+<template>
+    <style>     
+    </style>    
+</template>
+<script>
+    (function() {
+        //Coge el contenido del template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
+        var template = document._currentScript.ownerDocument.querySelector('template');
+        //Crea un prototype para este componente
+        var proto = Object.create(HTMLElement.prototype);
+        
+        
+        //Registra el createdCallback
+        proto.createdCallback = function() {
+            //Coge el contenido del componente
+            var clone = document.importNode(template.content, true);
+            //Añade el contenido del componente al shadow DOM
+            this.createShadowRoot().appendChild(clone);      
+        };
+       
+        //llamado cuando la instancia del componente es adjuntado al DOM
+        proto.attachedCallback = function() {
+        };
+        
+        //LLamado cuando algunos de estos atributos de componentes cambian
+        proto.attributeChangedCallback = function(attrName, oldVal, newVal) {
+        
+        };
+        //Registra el elemento con el documento
+        document.registerElement('date-widget', {prototype: proto});
+    }());
+</script>
