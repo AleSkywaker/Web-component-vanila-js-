@@ -88,16 +88,42 @@
         //Crea un prototype para este componente
         var proto = Object.create(HTMLElement.prototype);
         
-        //Set some constants
+        //Configurar constantes necesarias
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        
+
         //Registra el createdCallback
         proto.createdCallback = function() {
             //Coge el contenido del componente
             var clone = document.importNode(template.content, true);
             //Añade el contenido del componente al shadow DOM
-            this.createShadowRoot().appendChild(clone);      
+            this.createShadowRoot().appendChild(clone);   
+            
+            //Coge los elementos del shadow root
+            this.$container = this.shadowRoot.querySelector('.container');
+            this.$month = this.shadowRoot.querySelector('.month');
+            this.$day = this.shadowRoot.querySelector('.day');
+            this.$dayLong = this.shadowRoot.querySelector('.day-long');
+            this.$time = this.shadowRoot.querySelector('.time');
+
+            this.updateTheme(this.getAttribute('theme'));
+            //Invoca la function draw 
+            this.draw();
+            var that = this;
+            //llama la function draw cada segundo tiempo para actualizar ell tiempo
+            setInterval(function(){
+                that.draw();
+            }, 1000);
+
+        };
+        
+
+        proto.draw = function() {
+            this.date = new Date();
+            this.$month.innerHTML = months[this.date.getMonth()];
+            this.$day.innerHTML = this.date.getDate();
+            this.$dayLong.innerHTML = days[this.date.getDay()].toUpperCase();
+            this.$time.innerHTML = this.date.toLocaleTimeString();
         };
        
         //llamado cuando la instancia del componente es adjuntado al DOM
