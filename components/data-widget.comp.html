@@ -1,14 +1,96 @@
 <template>
-    <style>     
-    </style>    
-</template>
+        <style>
+            @import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700);
+            .container {
+                background-color: #FFF;
+                border-radius: 5px;
+                box-shadow: 0 0 5px #dadada;
+                position: relative;
+                min-height: 100px;
+                font-family: 'Roboto Condensed', sans-serif;
+                margin: 10px 0;
+            }
+            .container .left {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 30%;
+                color: #FFF;
+                border-radius: 5px 0 0 5px;
+                text-align: center;
+                padding: 18px 0 0 0;
+            }
+            .container .left .month {
+                line-height: 20px;
+                font-weight: 300;
+            }
+            .container .left .day {
+                font-size: 40px
+            }
+            .container .right {
+                margin-left: 30%;
+                padding: 10px 10px 10px 15px;
+                color: #333;
+            }
+            .container .right .day-long {
+                font-weight: 300;
+                font-size: 18px;
+                line-height: 35px;
+            }
+            .container .right .time {
+                font-weight: bold;
+                font-size: 35px;
+                line-height: 40px;
+            }
+            /* THEME CODE */
+            .container.green .left {
+                background-color: #37bc9b;
+            }
+            .container.green .day-long {
+                color: #278b70;
+            }
+            .container.red .left {
+                background-color: #bc2751;
+            }
+            .container.red .day-long {
+                color: #922146;
+            }
+            .container.blue .left {
+                background-color: #356dbc;
+            }
+            .container.blue .day-long {
+                color: #2d5ea3;
+            }
+            .container.gold .left {
+                background-color: #bc9600;
+            }
+            .container.gold .day-long {
+                color: #9a7b00;
+            }
+        </style>
+        <div class="container">
+            <div class="left">
+                <div class="month"></div>
+                <div class="day"></div>
+            </div>
+            <div class="right">
+                <div class="day-long"></div>
+                <div class="time"></div>
+            </div>
+        </div>
+    </template>
 <script>
     (function() {
-        //Coge el contenido del template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
+        /* Coge el contenido del template (_currentScript is available with webcomponents.js, 
+        use currentScript if you don't use this Polyfill) */
         var template = document._currentScript.ownerDocument.querySelector('template');
         //Crea un prototype para este componente
         var proto = Object.create(HTMLElement.prototype);
         
+        //Set some constants
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
         
         //Registra el createdCallback
         proto.createdCallback = function() {
